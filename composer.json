@@ -1,5 +1,5 @@
 {
-    "name": "dfridrich/qr-platba",
+    "name": "uw-richard/qr-platba",
     "type": "library",
     "description": "Generování QR plateb v PHP.",
     "keywords": [
@@ -7,17 +7,17 @@
         "qr",
         "platba"
     ],
-    "homepage": "https://github.com/dfridrich/QRPlatba",
+    "homepage": "https://github.com/uw-richard/QRPlatba",
     "license": "MIT",
     "authors": [
         {
-            "name": "Dennis Fridrich",
-            "email": "fridrich.dennis@gmail.com"
+            "name": "originally Dennis Fridrich, modified by Richard Koza",
+            "email": "info@umimeweby.cz"
         }
     ],
     "require": {
-        "php": ">=5.6.0",
-        "endroid/qr-code": "^2.0"
+        "php": ">=7.2",
+        "endroid/qr-code": "^3"
     },
     "autoload": {
         "psr-4": {
