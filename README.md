@@ -23,9 +23,12 @@ Air Bank, Česká spořitelna, ČSOB, Equa bank, Era, Fio banka, Komerční bank
 
 Podporuje PHP 5.6 až 7.2.
 
+**UW Richard modifikovaná verze podporuje pouze >=7.2**
+
 ## Instalace pomocí Composeru
 
 `composer require dfridrich/qr-platba`
+`composer require uw-richard/qr-platba` pro upravenou verzi pro endroid/qr-code:^3 a PHP >= 7.2
 
 ## Příklad
 
