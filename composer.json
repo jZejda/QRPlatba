@@ -1,5 +1,5 @@
 {
-    "name": "uw-richard/qr-platba",
+    "name": "umimeweby/qr-platba",
     "type": "library",
     "description": "Generování QR plateb v PHP.",
     "keywords": [
@@ -7,7 +7,7 @@
         "qr",
         "platba"
     ],
-    "homepage": "https://github.com/uw-richard/QRPlatba",
+    "homepage": "https://bitbucket.org/umimeweby/qrplatba/",
     "license": "MIT",
     "authors": [
         {
@@ -17,7 +17,7 @@
     ],
     "require": {
         "php": ">=7.2",
-        "endroid/qr-code": "^3"
+        "endroid/qr-code": "^3.0"
     },
     "autoload": {
         "psr-4": {
