@@ -1,5 +1,5 @@
 {
-    "name": "umimeweby/qr-platba",
+    "name": "umimeweby/qrplatba",
     "type": "library",
     "description": "Generování QR plateb v PHP.",
     "keywords": [
