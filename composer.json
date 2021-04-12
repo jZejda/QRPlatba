@@ -17,7 +17,6 @@
     ],
     "require": {
         "php": ">=7.2",
-        "endroid/qr-code": "^3.0",
         "chillerlan/php-qrcode": "4.3.0"
     },
     "autoload": {
