@@ -284,7 +284,7 @@ class QRInvoice
      */
     public function setMessage($msg)
     {
-        $this->keys['MSG'] = mb_substr($this->stripDiacritics($msg), 0, 60);
+        $this->keys['MSG'] = mb_substr($this->stripDiacritics(strtoupper($msg)), 0, 60);
 
         if($this->isQRFaktura){
             $this->setQRFakturaMessage($msg);
@@ -347,7 +347,7 @@ class QRInvoice
      * @param bool $isQRFaktura
      * @return $this
      */
-    public function setGenerateQRFaktura(bool $isQRFaktura)
+    public function setGenerateQRInvoice(bool $isQRFaktura)
     {
         $this->isQRFaktura = $isQRFaktura;
 
@@ -374,7 +374,7 @@ class QRInvoice
      * @return $this
      * @throws QRInvoiceException
      */
-    public function setIDQRFaktura($id)
+    public function setIDQRInvoice($id)
     {
         if (mb_strlen($id) > 40) {
             throw new QRInvoiceException('Invoice ID is higher then 40 chars');
@@ -395,7 +395,7 @@ class QRInvoice
      */
     public function setQRFakturaMessage($msg)
     {
-        $this->keys_QRF['MSG'] = mb_substr($this->stripDiacritics($msg), 0, 40);
+        $this->keys_QRF['MSG'] = mb_substr($this->stripDiacritics(strtoupper($msg)), 0, 40);
 
         return $this;
     }
@@ -531,6 +531,8 @@ class QRInvoice
 
         setlocale(LC_CTYPE, 'cs_CZ');
 
-        return iconv('UTF-8', 'ASCII//TRANSLIT', $string);
+          $clean_string = iconv('UTF-8', 'ASCII//TRANSLIT', $string);
+
+          return str_replace(array('\'', '"', '^'), '', $clean_string);
     }
 }
