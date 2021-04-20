@@ -284,7 +284,7 @@ class QRInvoice
      */
     public function setMessage($msg)
     {
-        $this->keys['MSG'] = mb_substr($this->stripDiacritics(strtoupper($msg)), 0, 60);
+        $this->keys['MSG'] = mb_substr($this->stripDiacritics($msg), 0, 60);
 
         if($this->isQRFaktura){
             $this->setQRFakturaMessage($msg);
@@ -302,7 +302,7 @@ class QRInvoice
      */
     public function setRecipientName($name)
     {
-        $this->keys['RN'] = mb_substr($this->stripDiacritics($name), 0, 35);
+        $this->keys['RN'] = mb_substr($this->stripDiacritics($name, false), 0, 35);
 
         return $this;
     }
@@ -395,7 +395,7 @@ class QRInvoice
      */
     public function setQRFakturaMessage($msg)
     {
-        $this->keys_QRF['MSG'] = mb_substr($this->stripDiacritics(strtoupper($msg)), 0, 40);
+        $this->keys_QRF['MSG'] = mb_substr($this->stripDiacritics($msg), 0, 40);
 
         return $this;
     }
@@ -523,16 +523,21 @@ class QRInvoice
      * Odstranění diaktitiky.
      *
      * @param $string
+     * @param bool $is_uppercase
      *
      * @return mixed
      */
-    private function stripDiacritics($string)
+    private function stripDiacritics($string, $is_uppercase = true)
     {
 
         setlocale(LC_CTYPE, 'cs_CZ');
+        $clean_string = iconv('UTF-8', 'ASCII//TRANSLIT', $string);
+        $clean_string = str_replace(array('\'', '"', '^'), '', $clean_string);
 
-          $clean_string = iconv('UTF-8', 'ASCII//TRANSLIT', $string);
+        if($is_uppercase === true){
+            $clean_string = strtoupper($clean_string);
+        }
 
-          return str_replace(array('\'', '"', '^'), '', $clean_string);
+        return $clean_string;
     }
 }
