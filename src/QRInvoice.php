@@ -9,7 +9,7 @@
  * please view LICENSE.
  */
 
-namespace Defr\QRPlatba;
+namespace Defr\QRInvoice;
 
 use chillerlan\QRCode\{QRCode, QROptions};
 
@@ -18,7 +18,7 @@ use chillerlan\QRCode\{QRCode, QROptions};
  *
  * @see https://raw.githubusercontent.com/snoblucha/QRPlatba/master/QRPlatba.php
  */
-class QRPlatba
+class QRInvoice
 {
     /**
      * Verze QR formátu QR Platby.
@@ -176,7 +176,7 @@ class QRPlatba
      * @param null $amount
      * @param null $variable
      *
-     * @return QRPlatba
+     * @return QRInvoice
      * @throws \InvalidArgumentException
      */
     public static function create($account = null, $amount = null, $variable = null)
@@ -194,12 +194,22 @@ class QRPlatba
     public function setAccount($account)
     {
 
-        if (preg_match('/^([A-Z]{2})([0-9]{22})$/', $account)) {
-            $this->keys['ACC'] = $account;
-        }
-        else {
-            $this->keys['ACC'] = self::accountToIban($account);
-        }
+        $this->keys['ACC'] = self::accountToIban($account);
+
+        return $this;
+    }
+
+    /**
+     * Set IBAN number.
+     *
+     * @param $iban
+     *
+     * @return $this
+     */
+    public function setAccountIBAN($iban)
+    {
+
+        $this->keys['ACC'] = $iban;
 
         return $this;
     }
@@ -251,14 +261,14 @@ class QRPlatba
      *
      * @param $ss
      *
-     * @throws QRPlatbaException
+     * @throws QRInvoiceException
      *
      * @return $this
      */
     public function setSpecificSymbol($ss)
     {
         if (mb_strlen($ss) > 10) {
-            throw new QRPlatbaException('Specific symbol is higher than 10 chars');
+            throw new QRInvoiceException('Specific symbol is higher than 10 chars');
         }
         $this->keys['X-SS'] = $ss;
 
@@ -329,7 +339,7 @@ class QRPlatba
         return $this;
     }
 
-    // ---------------------- QRFaktura -----------------------------
+    // ---------------------- QRInvoice RQPay -----------------------------
 
     /**
      * Nastaveni generovani QRFaktury do QRPlatby
@@ -362,12 +372,12 @@ class QRPlatba
      *
      * @param $id
      * @return $this
-     * @throws QRPlatbaException
+     * @throws QRInvoiceException
      */
     public function setIDQRFaktura($id)
     {
         if (mb_strlen($id) > 40) {
-            throw new QRPlatbaException('Invoidce ID is higher then 40 chars');
+            throw new QRInvoiceException('Invoice ID is higher then 40 chars');
         }
         else {
             $this->keys_QRF['ID'] = $id;
@@ -390,7 +400,7 @@ class QRPlatba
         return $this;
     }
 
-    // ---------------------- QRFaktura -----------------------------
+    // ---------------------- QRInvoice -----------------------------
 
     /**
      * Metoda vrátí QR Platbu + QR Fakturu jako textový řetězec.
@@ -518,24 +528,9 @@ class QRPlatba
      */
     private function stripDiacritics($string)
     {
-        $string = str_replace(
-            [
-                'ě', 'š', 'č', 'ř', 'ž', 'ý', 'á', 'í', 'é', 'ú', 'ů',
-                'ó', 'ť', 'ď', 'ľ', 'ň', 'ŕ', 'â', 'ă', 'ä', 'ĺ', 'ć',
-                'ç', 'ę', 'ë', 'î', 'ń', 'ô', 'ő', 'ö', 'ů', 'ű', 'ü',
-                'Ě', 'Š', 'Č', 'Ř', 'Ž', 'Ý', 'Á', 'Í', 'É', 'Ú', 'Ů',
-                'Ó', 'Ť', 'Ď', 'Ľ', 'Ň', 'Ä', 'Ć', 'Ë', 'Ö', 'Ü'
-            ],
-            [
-                'e', 's', 'c', 'r', 'z', 'y', 'a', 'i', 'e', 'u', 'u',
-                'o', 't', 'd', 'l', 'n', 'a', 'a', 'a', 'a', 'a', 'a',
-                'c', 'e', 'e', 'i', 'n', 'o', 'o', 'o', 'u', 'u', 'u',
-                'E', 'S', 'C', 'R', 'Z', 'Y', 'A', 'I', 'E', 'U', 'U',
-                'O', 'T', 'D', 'L', 'N', 'A', 'C', 'E', 'O', 'U'
-            ],
-            $string
-        );
 
-        return $string;
+        setlocale(LC_CTYPE, 'cs_CZ');
+
+        return iconv('UTF-8', 'ASCII//TRANSLIT', $string);
     }
 }

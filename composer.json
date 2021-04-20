@@ -1,11 +1,11 @@
 {
-    "name": "jzejda/qrplatba",
+    "name": "jzejda/qrinvoice",
     "type": "library",
-    "description": "Generování QR plateb v PHP.",
+    "description": "Generating QR Invoice in PHP.",
     "keywords": [
         "php",
         "qr",
-        "platba"
+        "invoice"
     ],
     "homepage": "https://github.com/jZejda/QRPlatba",
     "license": "MIT",
@@ -17,11 +17,12 @@
     ],
     "require": {
         "php": ">=7.2",
-        "chillerlan/php-qrcode": "4.3.0"
+        "chillerlan/php-qrcode": "4.3.0",
+        "ext-iconv": "*"
     },
     "autoload": {
         "psr-4": {
-            "Defr\\QRPlatba\\": "src/"
+            "Defr\\QRInvoice\\": "src/"
         }
     },
     "require-dev": {

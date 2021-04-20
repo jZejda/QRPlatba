@@ -37,11 +37,11 @@ Podporuje PHP 5.6 až 7.2.
 
 require __DIR__ . '/vendor/autoload.php';
 
-use Defr\QRPlatba\QRPlatba;
+use Defr\QRPlatba\QRInvoice;
 
-$qrPlatba = new QRPlatba();
+$qrInvoice = new QRInvoice();
 
-$qrPlatba->setAccount('12-3456789012/0100')
+$qrInvoice->setAccount('12-3456789012/0100')
     ->setVariableSymbol('2016001234')
     ->setMessage('Toto je první QR platba.')
     ->setSpecificSymbol('0308')
@@ -49,7 +49,7 @@ $qrPlatba->setAccount('12-3456789012/0100')
     ->setCurrency('CZK') // Výchozí je CZK, lze zadat jakýkoli ISO kód měny
     ->setDueDate(new \DateTime());
 
-echo $qrPlatba->getQRCodeImage(); // Zobrazí <img> tag s kódem, viz níže  
+echo $qrInvoice->getQRCodeImage(); // Zobrazí <img> tag s kódem, viz níže  
 ```
 
 ![Ukázka](qrcode.png)
@@ -57,7 +57,7 @@ echo $qrPlatba->getQRCodeImage(); // Zobrazí <img> tag s kódem, viz níže
 Lze použít i jednodušší zápis:
 
 ```php
-echo QRPlatba::create('12-3456789012/0100', 987.60)
+echo QRInvoice::create('12-3456789012/0100', 987.60)
     ->setMessage('QR platba je parádní!')
     ->getQRCodeImage();
 ```
@@ -67,10 +67,10 @@ echo QRPlatba::create('12-3456789012/0100', 987.60)
 Uložení do souboru
 ```php
 // Uloží png o velikosti 100x100 px
-$qrPlatba->saveQRCodeImage("qrcode.png", "png", 100);
+$qrInvoice->saveQRCodeImage("qrcode.png", "png", 100);
 
 // Uloží svg o velikosti 100x100 px
-$qrPlatba->saveQRCodeImage("qrcode.svg", "svg", 100);
+$qrInvoice->saveQRCodeImage("qrcode.svg", "svg", 100);
 ```
 
 Aktuální možné formáty jsou: 
@@ -84,7 +84,7 @@ Pro další je potřeba dopsat vlastní Writter
 Zobrazení data-uri
 ```php
 // data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUAAAAFAAQMAAAD3XjfpAAAA...
-echo $qrPlatba->getQRCodeInstance()->writeDataUri();
+echo $qrInvoice->getQRCodeInstance()->writeDataUri();
 ```
 
 ## Odkazy
