@@ -444,33 +444,29 @@ class QRInvoice
      * Instance třídy QrCode pro libovolné úpravy (barevnost, atd.).
      *
      * @param string $format
+     * @param bool $rawFormat
      *
      * @return QrCode
      */
-    public function getQRCode($format = 'svg')
+    public function getQRCode(string $format = 'svg', int $size = null,  bool $isBase64Encoded = false)
     {
 
         $qrOptinsData = array (
             'version'           => QRCode::VERSION_AUTO,
             'eccLevel'          => QRCode::ECC_L,
-            'imageBase64'       => false,
-            'scale'             => $this->QRSquareSize,
-            //'imageTransparent'  => false,
-            //'addQuietzone'      => true,
-
         );
 
         switch ($format) {
             case "png":
                 $qrOptinsData['outputType'] = QRCode::OUTPUT_IMAGE_PNG;
-                $qrOptinsData['imageBase64'] = true;
+                $qrOptinsData['imageBase64'] = $isBase64Encoded;
+                $qrOptinsData['scale'] = $this->QRSquareSize;
 
                 break;
             default:
                 $qrOptinsData['outputType'] = QRCode::OUTPUT_MARKUP_SVG;
-                $qrOptinsData['svgViewBoxSize'] = $this->QRSVGviewBox;
+                $qrOptinsData['svgDefs'] = ((!is_null($size)) ? '<style>rect{shape-rendering:crispEdges} svg{width: '.$size.'px !important;height: '.$size.'px !important;}</style>' : '');
         }
-
 
         $qrOptions = new QROptions($qrOptinsData);
 
