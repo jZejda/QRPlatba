@@ -141,7 +141,11 @@ class QRInvoice
      */
     private $QRSquareSize = 4;
 
-    private $QRSVGviewBox = 350;
+    /**
+     * velikost SVG objektu v px
+     * @var null $svgSize
+     */
+    private $svgSize = null;
 
 
     /**
@@ -400,6 +404,20 @@ class QRInvoice
         return $this;
     }
 
+    /**
+     * Nastavuje velikost (width/height) SVG objektu
+     *
+     * @param int|null $size
+     */
+    public function setSvgDimension(?int $size)
+    {
+        if(!is_null($size)){
+            $this->svgSize = $size;
+        }
+
+        return $this;
+    }
+
     // ---------------------- QRInvoice -----------------------------
 
     /**
@@ -448,7 +466,7 @@ class QRInvoice
      *
      * @return QrCode
      */
-    public function getQRCode(string $format = 'svg', int $size = null,  bool $isBase64Encoded = false)
+    public function getQRCode(string $format = 'svg', bool $isBase64Encoded = false)
     {
 
         $qrOptinsData = array (
@@ -465,7 +483,7 @@ class QRInvoice
                 break;
             default:
                 $qrOptinsData['outputType'] = QRCode::OUTPUT_MARKUP_SVG;
-                $qrOptinsData['svgDefs'] = ((!is_null($size)) ? '<style>rect{shape-rendering:crispEdges} svg{width: '.$size.'px !important;height: '.$size.'px !important;}</style>' : '');
+                $qrOptinsData['svgDefs'] = ((!is_null($this->svgSize)) ? '<style>rect{shape-rendering:crispEdges} svg{width: '.$this->svgSize.'px !important;height: '.$this->svgSize.'px !important;}</style>' : '');
         }
 
         $qrOptions = new QROptions($qrOptinsData);
