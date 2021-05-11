@@ -472,12 +472,12 @@ class QRInvoice
         $qrOptinsData = array (
             'version'           => QRCode::VERSION_AUTO,
             'eccLevel'          => QRCode::ECC_L,
+            'imageBase64'       => $isBase64Encoded,
         );
 
         switch ($format) {
             case "png":
                 $qrOptinsData['outputType'] = QRCode::OUTPUT_IMAGE_PNG;
-                $qrOptinsData['imageBase64'] = $isBase64Encoded;
                 $qrOptinsData['scale'] = $this->QRSquareSize;
 
                 break;
