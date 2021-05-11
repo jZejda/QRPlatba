@@ -291,7 +291,7 @@ class QRInvoice
         $this->keys['MSG'] = mb_substr($this->stripDiacritics($msg), 0, 60);
 
         if($this->isQRFaktura){
-            $this->setQRFakturaMessage($msg);
+            $this->setQRFakturaMessage(trim($msg));
         }
 
         return $this;
