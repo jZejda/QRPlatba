@@ -134,7 +134,7 @@ class QRInvoice
     /**
      * zda kod obsahuje i QRPlatbu
      */
-    private $isQRFaktura = true;
+    private $isQrInvoice = true;
 
     /**
      * velikost kazdeho ctverce v QR kodu v px pro png
@@ -290,7 +290,7 @@ class QRInvoice
     {
         $this->keys['MSG'] = mb_substr($this->stripDiacritics($msg), 0, 60);
 
-        if($this->isQRFaktura){
+        if($this->isQrInvoice){
             $this->setQrInvoiceMessage($msg);
         }
 
@@ -348,12 +348,12 @@ class QRInvoice
     /**
      * Nastaveni generovani QRFaktury do QRPlatby
      *
-     * @param bool $isQRFaktura
+     * @param bool $isQrInvoice
      * @return $this
      */
-    public function setGenerateQRInvoice(bool $isQRFaktura)
+    public function setGenerateQRInvoice(bool $isQrInvoice)
     {
-        $this->isQRFaktura = $isQRFaktura;
+        $this->isQrInvoice = $isQrInvoice;
 
         return $this;
     }
@@ -437,7 +437,7 @@ class QRInvoice
 
         $QRP_string = implode('*', $chunks);
 
-        if(!$this->isQRFaktura) {
+        if(!$this->isQrInvoice) {
             return $QRP_string;
         }
         else {
