@@ -291,7 +291,7 @@ class QRInvoice
         $this->keys['MSG'] = mb_substr($this->stripDiacritics($msg), 0, 60);
 
         if($this->isQRFaktura){
-            $this->setQRFakturaMessage(trim($msg));
+            $this->setQrInvoiceMessage($msg);
         }
 
         return $this;
@@ -372,13 +372,13 @@ class QRInvoice
     }
 
     /**
-     * Nataveni ID faktury pro QRFaktruu
+     * Nastaveni ID faktury pro QRFaktruu
      *
      * @param $id
      * @return $this
      * @throws QRInvoiceException
      */
-    public function setIDQRInvoice($id)
+    public function setIdQrInvoice($id)
     {
         if (mb_strlen($id) > 40) {
             throw new QRInvoiceException('Invoice ID is higher then 40 chars');
@@ -397,7 +397,7 @@ class QRInvoice
      *
      * @return $this
      */
-    public function setQRFakturaMessage($msg)
+    public function setQrInvoiceMessage($msg)
     {
         $this->keys_QRF['MSG'] = mb_substr($this->stripDiacritics($msg), 0, 40);
 
